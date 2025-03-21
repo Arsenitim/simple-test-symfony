@@ -15,8 +15,11 @@ class DataProviderService
         $this->entityManager = $entityManager;
     }
 
-    private function getCurrencyDataArray(CurrencyPair $currencyPair, \DateTimeInterface|null $dateTimeFrom, \DateTimeInterface|null $dateTimeTo) : ?array
-    {
+    private function getCurrencyDataArray(
+        CurrencyPair $currencyPair,
+        \DateTimeInterface|null $dateTimeFrom,
+        \DateTimeInterface|null $dateTimeTo
+    ): mixed {
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
         $queryBuilder->select('crd')
@@ -38,8 +41,12 @@ class DataProviderService
     }
 
 
-    public function getChartData(string $currencyBase, string $currencyQuote, \DateTimeInterface|null $dateTimeFrom, \DateTimeInterface|null $dateTimeTo) : ?array
-    {
+    public function getChartData(
+        string $currencyBase,
+        string $currencyQuote,
+        \DateTimeInterface|null $dateTimeFrom,
+        \DateTimeInterface|null $dateTimeTo
+    ): ?array {
         $currencyPair =  $this->entityManager->getRepository(CurrencyPair::class)->findOneBy([
             'currencyBase' => $currencyBase,
             'currencyQuote' => $currencyQuote
@@ -54,7 +61,7 @@ class DataProviderService
         $timelineData = [];
         foreach ($currencyRateDataArray as $currencyRateData) {
             $timelineData[] = [
-                'datetime' => $currencyRateData->getTimestamp(),
+                'dateTime' => $currencyRateData->getTimestamp(),
                 'value' => $currencyRateData->getValue()
             ];
         }
@@ -65,11 +72,12 @@ class DataProviderService
                 'baseCurrency' => $currencyPair->getCurrencyBase(),
                 'quoteCurrency' => $currencyPair->getCurrencyQuote()
             ],
-            'timeline_data' => $timelineData
+            'timelineData' => $timelineData
         ];
     }
 
-    public function listCurrencyPairs(): array {
+    public function listCurrencyPairs(): array
+    {
         $currencyPairs =  $this->entityManager->getRepository(CurrencyPair::class)->findAll();
         $currencyPairsArray = [];
         foreach ($currencyPairs as $currencyPair) {
@@ -82,6 +90,4 @@ class DataProviderService
 
         return $currencyPairsArray;
     }
-
-
 }

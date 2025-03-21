@@ -21,6 +21,14 @@ class CurrencyPair
     #[ORM\Column(length: 32)]
     private ?string $currencyQuote = null;
 
+    #[ORM\OneToMany(targetEntity: CurrencyRateData::class, mappedBy: "currencyPair", cascade: ["persist", "remove"])]
+    private Collection $currencyRateData;
+
+    public function __construct()
+    {
+        $this->currencyRateData = new ArrayCollection();
+    }
+
     public function getCurrencyRateData(): Collection
     {
         return $this->currencyRateData;
@@ -29,15 +37,6 @@ class CurrencyPair
     public function setCurrencyRateData(Collection $currencyRateData): void
     {
         $this->currencyRateData = $currencyRateData;
-    }
-
-    // Relations
-    #[ORM\OneToMany(targetEntity: CurrencyRateData::class, mappedBy: "currencyPair", cascade: ["persist", "remove"])]
-    private Collection $currencyRateData;
-
-    public function __construct()
-    {
-        $this->currencyRateData = new ArrayCollection();
     }
 
     public function addCurrencyRateData(CurrencyRateData $currencyRateData): CurrencyPair

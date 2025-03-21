@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class ExtRateApiTest extends KernelTestCase
 {
 
-    public function testInterfaceImplementation()
+    public function testInterfaceImplementation(): void
     {
         $httpClientMock = $this->createMock(HttpClientInterface::class);
 
@@ -19,7 +19,7 @@ class ExtRateApiTest extends KernelTestCase
         $this->assertInstanceOf(ExtRateApiInterface::class, $extRateApiInterface);
     }
 
-    public function testFetchingRateData()
+    public function testFetchingRateData(): void
     {
         // Instantiate a real HttpClientInterface
         $httpClient = self::getContainer()->get(HttpClientInterface::class);

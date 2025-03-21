@@ -19,7 +19,7 @@ class CurrencyRateData
 
 
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $timestamp = null;
 
     #[ORM\Column(length: 255)]
@@ -54,6 +54,18 @@ class CurrencyRateData
         $this->currencyPairId = $currencyPairId;
     }
 
+    public function getCurrencyPair(): CurrencyPair
+    {
+        return $this->currencyPair;
+    }
+
+    public function setCurrencyPair(CurrencyPair $currencyPair): static
+    {
+        $this->currencyPair = $currencyPair;
+
+        return $this;
+    }
+
     public function getTimestamp(): ?\DateTimeInterface
     {
         return $this->timestamp;
@@ -74,18 +86,6 @@ class CurrencyRateData
     public function setValue(string $value): static
     {
         $this->value = $value;
-
-        return $this;
-    }
-
-    public function getCurrencyPair(): CurrencyPair
-    {
-        return $this->currencyPair;
-    }
-
-    public function setCurrencyPair(int $currencyPair): static
-    {
-        $this->currencyPair = $currencyPair;
 
         return $this;
     }

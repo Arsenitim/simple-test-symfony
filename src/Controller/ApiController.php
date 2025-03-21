@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
 class ApiController extends AbstractController
 {
-
     private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -31,9 +30,6 @@ class ApiController extends AbstractController
         );
     }
 
-    /*
-            http://127.0.0.1:8000/api/currency_pairs
-     */
     #[Route('/api/currency_pairs', name: 'api_currency_pairs', methods: ['GET'])]
     public function getCurrencyPairs(): JsonResponse
     {
@@ -42,11 +38,6 @@ class ApiController extends AbstractController
         return $this->json($currencyPairsArray);
     }
 
-
-    /*
-            http://127.0.0.1:8000/api/chart_data?currencyBase=bitcoin&currencyQuote=usd&beginDateTimeStr=2000-01-12&endDateTimeStr=2050-01-12
-            http://127.0.0.1:8000/api/chart_data?currencyBase=bitcoin&currencyQuote=usd
-    */
     #[Route('/api/chart_data', name: 'api_chart_data', methods: ['GET'])]
     public function getChartData(
         #[MapQueryParameter] string $currencyBase,
@@ -64,7 +55,10 @@ class ApiController extends AbstractController
         $dataProvider = new DataProviderService($this->entityManager);
         $data = $dataProvider->getChartData($currencyBase, $currencyQuote, $beginDateTime, $endDateTime);
         if (is_null($data)) {
-            throw new NotFoundHttpException('error: no data for this rate. Please use /api/currency_pairs to get the list of possible rates');
+            throw new NotFoundHttpException(
+                'error: no data for this rate. ' .
+                'Please use /api/currency_pairs to get the list of possible rates'
+            );
         }
         return $this->json($data);
     }

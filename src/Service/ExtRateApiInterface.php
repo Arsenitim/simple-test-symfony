@@ -6,5 +6,5 @@ use App\Entity\CurrencyPair;
 
 interface ExtRateApiInterface
 {
-    public function getCurrentCoinRate(CurrencyPair $currencyPair);
+    public function getCurrentCoinRate(CurrencyPair $currencyPair): ?string;
 }
