@@ -24,8 +24,8 @@ class DataProviderService
 
         $queryBuilder->select('crd')
             ->from(CurrencyRateData::class, 'crd')
-            ->where('crd.currencyPairId = :currencyPairId')
-            ->setParameter('currencyPairId', $currencyPair->getId());
+            ->where('crd.currencyPair = :currencyPair')
+            ->setParameter('currencyPair', $currencyPair);
 
         if (!is_null($dateTimeFrom)) {
             $queryBuilder->andWhere('crd.timestamp >= :dateTimeFrom')
