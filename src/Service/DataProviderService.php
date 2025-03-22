@@ -40,7 +40,9 @@ class DataProviderService
         return $queryBuilder->getQuery()->getResult();
     }
 
-
+    /**
+     * @return array<mixed>|null
+     */
     public function getChartData(
         string $currencyBase,
         string $currencyQuote,
@@ -76,6 +78,9 @@ class DataProviderService
         ];
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function listCurrencyPairs(): array
     {
         $currencyPairs =  $this->entityManager->getRepository(CurrencyPair::class)->findAll();
