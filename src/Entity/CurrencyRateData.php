@@ -12,13 +12,13 @@ class CurrencyRateData
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?\DateTimeInterface $timestamp = null;
+    private DateTimeInterface $timestamp;
 
     #[ORM\Column(length: 255)]
-    private ?string $value = null;
+    private string $value;
 
 
     #[ORM\ManyToOne(targetEntity: CurrencyPair::class, inversedBy: "currencyRateData")]
@@ -37,7 +37,7 @@ class CurrencyRateData
         return $this->id;
     }
 
-    public function getTimestamp(): ?\DateTimeInterface
+    public function getTimestamp(): DateTimeInterface
     {
         return $this->timestamp;
     }
@@ -57,18 +57,6 @@ class CurrencyRateData
     public function setValue(string $value): static
     {
         $this->value = $value;
-
-        return $this;
-    }
-
-    public function getCurrencyPair(): CurrencyPair
-    {
-        return $this->currencyPair;
-    }
-
-    public function setCurrencyPair(CurrencyPair $currencyPair): static
-    {
-        $this->currencyPair = $currencyPair;
 
         return $this;
     }

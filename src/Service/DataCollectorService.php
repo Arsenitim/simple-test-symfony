@@ -15,7 +15,7 @@ class DataCollectorService
         // ...
     }
 
-    private function getCurrentRate(CurrencyPair $currencyPair): ?string
+    private function getCurrentRate(CurrencyPair $currencyPair): string
     {
         return $this->extRateApi->getCurrentCoinRate($currencyPair);
     }
@@ -32,9 +32,7 @@ class DataCollectorService
         $currencyPairs = $this->entityManager->getRepository(CurrencyPair::class)->findAll();
         foreach ($currencyPairs as $currencyPair) {
             $rate = $this->getCurrentRate($currencyPair);
-            if (!is_null($rate)) {
-                $this->addCurrencyRateDataPoint($currencyPair, $rate);
-            }
+            $this->addCurrencyRateDataPoint($currencyPair, $rate);
         }
     }
 }

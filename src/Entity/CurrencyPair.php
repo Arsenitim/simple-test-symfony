@@ -13,23 +13,13 @@ class CurrencyPair
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 32)]
-    private ?string $currencyBase = null;
+    private string $currencyBase;
 
     #[ORM\Column(length: 32)]
-    private ?string $currencyQuote = null;
-
-    public function getCurrencyRateData(): Collection
-    {
-        return $this->currencyRateData;
-    }
-
-    public function setCurrencyRateData(Collection $currencyRateData): void
-    {
-        $this->currencyRateData = $currencyRateData;
-    }
+    private string $currencyQuote;
 
     #[ORM\OneToMany(targetEntity: CurrencyRateData::class, mappedBy: "currencyPair", cascade: ["persist", "remove"])]
     private Collection $currencyRateData;
@@ -39,23 +29,7 @@ class CurrencyPair
         $this->currencyRateData = new ArrayCollection();
     }
 
-    public function addCurrencyRateData(CurrencyRateData $currencyRateData): CurrencyPair
-    {
-        $currencyRateData->setCurrencyPair($this);
-
-        $this->currencyRateData->add($currencyRateData);
-
-        return $this;
-    }
-
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCurrencyBase(): ?string
+    public function getCurrencyBase(): string
     {
         return $this->currencyBase;
     }
@@ -63,11 +37,10 @@ class CurrencyPair
     public function setCurrencyBase(string $currencyBase): static
     {
         $this->currencyBase = $currencyBase;
-
         return $this;
     }
 
-    public function getCurrencyQuote(): ?string
+    public function getCurrencyQuote(): string
     {
         return $this->currencyQuote;
     }
@@ -75,7 +48,6 @@ class CurrencyPair
     public function setCurrencyQuote(string $currencyQuote): static
     {
         $this->currencyQuote = $currencyQuote;
-
         return $this;
     }
 }

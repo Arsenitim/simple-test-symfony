@@ -16,21 +16,28 @@ class CoingeckoRateApiService implements ExtRateApiInterface
         $this->httpClient = $httpClient;
     }
 
-    public function getCurrentCoinRate(CurrencyPair $currencyPair): ?string
+    public function getCurrentCoinRate(CurrencyPair $currencyPair): string
     {
         $coin = $currencyPair->getCurrencyBase();
         $currency = $currencyPair->getCurrencyQuote();
-        $precision = 16;
 
-        $url = sprintf('%s?ids=%s&vs_currencies=%s&precision=%s', $this->apiUrl, $coin, $currency, $precision);
+        $url = sprintf(
+            '%s?ids=%s&vs_currencies=%s&precision=%s',
+            ServiceConstants::COINGECKO_API_URL,
+            $coin,
+            $currency,
+            ServiceConstants::COINGECKO_PRECISION
+        );
 
-        try {
-            $response = $this->httpClient->request('GET', $url);
-            $data = $response->toArray();
 
-            return strval($data[$coin][$currency]) ?? null;
-        } catch (\Exception $e) {
-            return null;
+        $response = $this->httpClient->request('GET', $url);
+        $data = $response->toArray();
+        $rateValue = $data[$coin][$currency];
+
+        if (!preg_match('/^\d+\.\d+$/', $rateValue)) {
+            throw new Exception("Something is wrong with Coingecko Rate Api. Value received: " . $rateValue);
         }
+
+        return strval($rateValue);
     }
 }
