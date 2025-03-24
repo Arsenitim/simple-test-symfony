@@ -16,9 +16,10 @@ dependencies:
 composer install
 ```
 
-configure db (.env):
+configure db and sentry (.env):
 ```
 DATABASE_URL=...
+SENTRY_DSN=...
 ```
 
 run migrations:
@@ -43,12 +44,21 @@ symfony console messenger:consume -v scheduler_default
 ```
 
 test the endpoint after a couple of minutes. It should have some data:
-```
+
 http://127.0.0.1:8000/api/currency_pairs
 
 http://127.0.0.1:8000/api/chart_data?currencyBase=bitcoin&currencyQuote=usd&beginDateTimeStr=2000-01-12&endDateTimeStr=2050-01-12  
 
 http://127.0.0.1:8000/api/chart_data?currencyBase=bitcoin&currencyQuote=usd
+
+
+**Testing**
+
+prepare the test db:
+```
+php bin/console doctrine:database:create --env=test
+php bin/console doctrine:schema:create --env=test
+php bin/console doctrine:migrations:migrate --env=test
 ```
 
 run tests:
