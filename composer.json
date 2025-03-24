@@ -89,6 +89,11 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "check-code": [
+            "phpstan analyse",
+            "phpcs --standard=PSR12 src tests",
+            "phpunit"
         ]
     },
     "conflict": {
