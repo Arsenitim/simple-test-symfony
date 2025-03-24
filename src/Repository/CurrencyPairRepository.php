@@ -16,28 +16,15 @@ class CurrencyPairRepository extends ServiceEntityRepository
         parent::__construct($registry, CurrencyPair::class);
     }
 
-    //    /**
-    //     * @return CurrencyPair[] Returns an array of CurrencyPair objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?CurrencyPair
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneByBaseAndQuote(string $currencyBase, string $currencyQuote): ?CurrencyPair
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.currencyBase = :cb')
+            ->setParameter('cb', $currencyBase)
+            ->andWhere('c.currencyQuote = :cq')
+            ->setParameter('cq', $currencyQuote)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

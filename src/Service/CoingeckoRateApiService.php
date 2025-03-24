@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
+use App\Constants\ServiceConstants;
 use App\Entity\CurrencyPair;
-use App\Service\ExtRateApiInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Exception;
 
 class CoingeckoRateApiService implements ExtRateApiInterface
 {
     private HttpClientInterface $httpClient;
-    private string $apiUrl = 'https://api.coingecko.com/api/v3/simple/price';
 
     public function __construct(HttpClientInterface $httpClient)
     {

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CurrencyRateDataRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeInterface;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: CurrencyRateDataRepository::class)]
 class CurrencyRateData
@@ -28,7 +30,7 @@ class CurrencyRateData
     public function __construct(CurrencyPair $currencyPair, string $value)
     {
         $this->currencyPair = $currencyPair;
-        $this->timestamp = new \DateTime(); // Default to now
+        $this->timestamp = new DateTimeImmutable(); // Default to now
         $this->value = $value;
     }
 
@@ -42,7 +44,7 @@ class CurrencyRateData
         return $this->timestamp;
     }
 
-    public function setTimestamp(\DateTimeInterface $timestamp): static
+    public function setTimestamp(DateTimeInterface $timestamp): static
     {
         $this->timestamp = $timestamp;
 

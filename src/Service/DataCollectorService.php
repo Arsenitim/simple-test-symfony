@@ -24,7 +24,6 @@ class DataCollectorService
     {
         $timeSeriesData = new CurrencyRateData($currencyPair, $val);
         $this->entityManager->persist($timeSeriesData);
-        $this->entityManager->flush();
     }
 
     public function fetchAndSaveFreshCurrencyRateData(): void
@@ -34,5 +33,6 @@ class DataCollectorService
             $rate = $this->getCurrentRate($currencyPair);
             $this->addCurrencyRateDataPoint($currencyPair, $rate);
         }
+        $this->entityManager->flush();
     }
 }
