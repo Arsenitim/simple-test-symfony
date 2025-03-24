@@ -4,7 +4,7 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SomeApiEndpointTest extends WebTestCase
+class ApiTest extends WebTestCase
 {
     public function testApiRootUrl(): void
     {
@@ -32,7 +32,5 @@ class SomeApiEndpointTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(404); // Should probably make it fire 400?
     }
-
     // ToDo: More to add!!!
-
 }
